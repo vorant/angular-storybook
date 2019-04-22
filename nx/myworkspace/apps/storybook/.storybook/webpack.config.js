@@ -7,7 +7,7 @@ module.exports = function({ config }) {
             {
                 loader: require.resolve('@storybook/addon-storysource/loader'),
                 options: {
-                    parser: 'typescript',
+                    parser: 'typescript'
                 }
             }
         ],
