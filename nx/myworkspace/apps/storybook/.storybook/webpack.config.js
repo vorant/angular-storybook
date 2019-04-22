@@ -14,5 +14,13 @@ module.exports = function({ config }) {
         enforce: 'pre'
     });
 
+    // config.module.rules.push({
+    //     test: /.jsx?$/,
+    //     loader: 'babel-loader',
+    //     query: {
+    //         presets: ['@babel/preset-env', '@babel/react']
+    //     }
+    // });
+
     return config;
 };
