@@ -47,9 +47,7 @@ export default class Tool extends Component {
         const { api } = this.props;
         const storyParams = api.getParameters(id, PARAM_KEY);
 
-        // if (storyParams) {
-            this.setState({ storyParams });
-        // }
+        this.setState({ storyParams });
     };
 
     handleClick = action => {
@@ -77,6 +75,10 @@ export default class Tool extends Component {
             if (storyParams && storyParams.imgName) {
                 style.backgroundImage = `url(/${storyParams.imgName})`;
             }
+
+            if (storyParams && storyParams.imgName && action === 'Invert') {
+                style.filter = 'invert(100%)';
+            }
         }
 
         return style;
@@ -95,7 +97,7 @@ export default class Tool extends Component {
         } else if (action === 'Compare') {
             style.opacity = '0.5';
         } else if (action === 'Invert') {
-            style.filter = 'invert(100%)';
+            // style.filter = 'invert(100%)';
             style.opacity = '0.5';
         }
 

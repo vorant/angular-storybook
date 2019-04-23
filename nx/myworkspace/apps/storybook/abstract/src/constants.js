@@ -1,5 +1,6 @@
 const uniq = new Date().getTime();
 export const ADDON_ID = 'storybook/absctract' + uniq;
+export const PANEL_ID = 'storybook/absctract' + uniq;
 export const PARAM_KEY = 'abstract';
 
 export default {

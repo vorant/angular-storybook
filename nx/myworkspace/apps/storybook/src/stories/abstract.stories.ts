@@ -36,7 +36,8 @@ storiesOf('Abstract | MyAbstract ', module)
         abstract: {
             backgroundPositionX: 0,
             backgroundPositionY: 0,
-            imgName: 'fe47363f-f9f0-477f-8ee3-b67a424d56db.png'
+            imgName: 'fe47363f-f9f0-477f-8ee3-b67a424d56db.png',
+            share: 'https://share.goabstract.com/670876ae-f767-467a-8bd6-f2c119cb3068'
         }
     }
 );
