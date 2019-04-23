@@ -1,0 +1,21 @@
+.my-button {
+    &__button {
+        background: rgba(98, 2, 238, 0.05);
+        border-radius: 4px 4px 4px 4px;
+        height: 36px;
+        padding: 0 8px;
+
+        color: rgb(121, 134, 203);
+        font-family: Roboto-Medium;
+        font-size: 14px;
+        font-weight: 500;
+        // height: 16px;
+        letter-spacing: 1.25px;
+        line-height: 16px;
+        text-align: center;
+        text-transform: uppercase;
+        // width: 64px;
+        border: none;
+        outline: none;
+    }
+}

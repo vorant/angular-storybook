@@ -159,21 +159,22 @@ export default class ViewportTool extends Component {
         const { api } = this.props;
         const storyParams = api.getParameters(id, PARAM_KEY);
         if (storyParams) {
-            this.setState({ ...this.state, storyParams });
+            this.setState({ storyParams });
+            debugger;
         }
     };
 
     change = (...args) => this.setState(...args);
 
     render() {
-        const { expanded } = this.state;
+        const { expanded, storyParams } = this.state;
         const { items, selected } = getState(
             this.props,
             this.state,
             this.change
         );
-        const storyParams = this.state.storyParams;
-
+        // const storyParams = this.state.storyParams;
+console.log('storyParams - ', storyParams);
         const item = items.find(i => i.id === selected);
         const backgroundPositionX =
             storyParams && storyParams.backgroundPositionX
@@ -191,9 +192,10 @@ export default class ViewportTool extends Component {
                       }px`
                   }
                 : {};
+
         const backgroundImage =
-            storyParams && storyParams.url
-                ? { backgroundImage: `url(${storyParams.url})` }
+            storyParams && storyParams.imgName
+                ? { backgroundImage: `url(/${storyParams.imgName})` }
                 : {};
 
         const filter =
@@ -211,13 +213,14 @@ export default class ViewportTool extends Component {
                             [`#${iframeId}`]: {
                                 position: 'relative',
                                 display: 'block',
-                                // margin: '10px auto',
+                                // margin: '8px',
                                 // border: '1px solid #f00',
                                 borderRadius: 4,
                                 boxShadow:
                                     '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08);',
                                 boxSizing: 'content-box',
-                                opacity: item.opacity || '1'
+                                opacity: item.opacity || '1',
+                                zIndex: 2
                             },
                             '#storybook-preview-background > div': {
                                 '&::before': {
@@ -227,11 +230,12 @@ export default class ViewportTool extends Component {
                                     top: '0',
                                     left: '0',
                                     right: '0',
+                                    margin: '8px',
                                     ...backgroundPositionX,
                                     ...backgroundPositionY,
                                     ...backgroundImage,
                                     ...filter,
-
+                                    zIndex: 1,
                                     backgroundRepeat: 'no-repeat'
                                 }
                             }
