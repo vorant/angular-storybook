@@ -14,11 +14,18 @@ module.exports = function({ config }) {
         enforce: 'pre'
     });
 
+    config.module.rules.push({
+        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+        // include: [path.join(__dirname, "../abstract")],
+        loader: "file-loader?name=assets/[name].[ext]"
+    });
+
     // config.module.rules.push({
-    //     test: /.jsx?$/,
-    //     loader: 'babel-loader',
+    //     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+    //     loader: 'svg-url-loader',
     //     query: {
-    //         presets: ['@babel/preset-env', '@babel/react']
+    //       limit: '10000',
+    //       mimetype: 'application/svg+xml'
     //     }
     // });
 
