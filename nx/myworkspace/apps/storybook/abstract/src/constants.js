@@ -1,6 +1,6 @@
 const uniq = new Date().getTime();
-export const ADDON_ID = 'storybook/viewport' + uniq;
-export const PARAM_KEY = 'viewport' + uniq;
+export const ADDON_ID = 'storybook/absctract' + uniq;
+export const PARAM_KEY = 'abstract';
 
 export default {
     UPDATE: `${ADDON_ID}/update`,

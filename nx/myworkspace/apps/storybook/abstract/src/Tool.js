@@ -11,29 +11,64 @@ import {
     WithTooltip,
     TooltipLinkList
 } from '@storybook/components';
-import { SET_STORIES } from '@storybook/core-events';
+import {
+    SET_STORIES,
+    STORY_CHANGED,
+    STORY_INIT,
+    SET_CURRENT_STORY,
+    GET_CURRENT_STORY,
+    SELECT_STORY
+} from '@storybook/core-events';
 
 import { PARAM_KEY } from './constants';
-import { INITIAL_VIEWPORTS, DEFAULT_VIEWPORT } from './defaults';
-
 import MyIcon from './my-icon';
 
-const toList = memoize(50)(items =>
-    items ? Object.entries(items).map(([id, value]) => ({ ...value, id })) : []
-);
+const actions = [
+    {
+        id: 'sh05',
+        title: 'Show design',
+        opacity: '0.05'
+    },
+    {
+        id: 'sh25',
+        title: 'Show design',
+        opacity: '0.25'
+    },
+    {
+        id: 'sh50',
+        title: 'Show design',
+        opacity: '0.5'
+    },
+    {
+        id: 'sh75',
+        title: 'Show design',
+        opacity: '0.75'
+    },
+    {
+        id: 'sh100',
+        title: 'Show design',
+        opacity: '1'
+    },
+    {
+        id: 'revert',
+        title: 'Invert color',
+        opacity: '0.5'
+    }
+];
+
 const iframeId = 'storybook-preview-iframe';
 
-const createItem = memoize(1000)((id, name, value, change) => ({
-    id: id || name,
-    title: name,
-    onClick: () => {
-        change({ selected: id, expanded: false });
-    },
-    right: `${value.width.replace('px', '')}x${value.height.replace('px', '')}`,
-    value
-}));
-
-const flip = ({ width, height }) => ({ height: width, width: height });
+function createItem(id, title, opacity, change) {
+    return {
+        id,
+        title,
+        onClick: () => {
+            change({ selected: id, expanded: false });
+        },
+        right: opacity,
+        opacity
+    };
+}
 
 const deprecatedViewportString = deprecate(
     () => 0,
@@ -44,7 +79,7 @@ const deprecateOnViewportChange = deprecate(
     'The viewport parameter `onViewportChange` is no longer supported'
 );
 
-const getState = memoize(10)((props, state, change) => {
+function getState(props, state, change) {
     const data = props.api.getCurrentStoryData();
     const parameters = data && data.parameters && data.parameters[PARAM_KEY];
 
@@ -59,63 +94,50 @@ const getState = memoize(10)((props, state, change) => {
         deprecateOnViewportChange();
     }
 
-    const list = disable ? [] : toList(viewports || INITIAL_VIEWPORTS);
+    const list = disable ? [] : actions;
 
-    const selected =
-        state.selected === 'responsive' ||
-        list.find(i => i.id === state.selected)
-            ? state.selected
-            : list.find(i => i.default) || defaultViewport || DEFAULT_VIEWPORT;
+    const selected = state.selected || null;
 
-    const resets =
-        selected !== 'responsive'
-            ? [
-                  {
-                      id: 'reset',
-                      title: 'Reset viewport',
-                      onClick: () => {
-                          change({ selected: undefined, expanded: false });
-                      }
-                  },
-                  {
-                      id: 'rotate',
-                      title: 'Rotate viewport',
-                      onClick: () => {
-                          change({
-                              isRotated: !state.isRotated,
-                              expanded: false
-                          });
-                      }
+    const resets = selected
+        ? [
+              {
+                  title: 'Remove image',
+                  onClick: () => {
+                      change({ selected: undefined, expanded: false });
                   }
-              ]
-            : [];
+              }
+          ]
+        : [];
+
     const items = list.length
         ? resets.concat(
-              list.map(({ id, name, styles: value }) =>
-                  createItem(id, name, value, change)
+              list.map(({ id, title, opacity }) =>
+                  createItem(id, title, opacity, change)
               )
           )
         : list;
 
     return {
-        isRotated: state.isRotated,
         items,
         selected
     };
-});
+}
 
 export default class ViewportTool extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isRotated: false,
             items: [],
-            selected: 'responsive',
-            expanded: false
+            selected: null,
+            expanded: false,
+            storyParams: {}
         };
 
-        this.listener = () => {
+        this.listener = stories => {
+            const { api } = this.props;
+            const storyId = api.getUrlState().storyId;
+            this.onStoryChange(storyId);
             this.setState({
                 selected: null
             });
@@ -125,6 +147,7 @@ export default class ViewportTool extends Component {
     componentDidMount() {
         const { api } = this.props;
         api.on(SET_STORIES, this.listener);
+        api.on(STORY_CHANGED, this.onStoryChange);
     }
 
     componentWillUnmount() {
@@ -132,16 +155,53 @@ export default class ViewportTool extends Component {
         api.off(SET_STORIES, this.listener);
     }
 
+    onStoryChange = id => {
+        const { api } = this.props;
+        const storyParams = api.getParameters(id, PARAM_KEY);
+        if (storyParams) {
+            this.setState({ ...this.state, storyParams });
+        }
+    };
+
     change = (...args) => this.setState(...args);
 
     render() {
         const { expanded } = this.state;
-        const { items, selected, isRotated } = getState(
+        const { items, selected } = getState(
             this.props,
             this.state,
             this.change
         );
+        const storyParams = this.state.storyParams;
+
         const item = items.find(i => i.id === selected);
+        const backgroundPositionX =
+            storyParams && storyParams.backgroundPositionX
+                ? {
+                      backgroundPositionX: `${
+                          storyParams.backgroundPositionX
+                      }px`
+                  }
+                : {};
+        const backgroundPositionY =
+            storyParams && storyParams.backgroundPositionY
+                ? {
+                      backgroundPositionY: `${
+                          storyParams.backgroundPositionY
+                      }px`
+                  }
+                : {};
+        const backgroundImage =
+            storyParams && storyParams.url
+                ? { backgroundImage: `url(${storyParams.url})` }
+                : {};
+
+        const filter =
+            item && item.title === 'Invert color'
+                ? {
+                      filter: 'invert(100%)'
+                  }
+                : {};
 
         return items.length ? (
             <Fragment>
@@ -151,33 +211,28 @@ export default class ViewportTool extends Component {
                             [`#${iframeId}`]: {
                                 position: 'relative',
                                 display: 'block',
-                                margin: '10px auto',
-                                // border: '5px solid #f00',
+                                // margin: '10px auto',
+                                // border: '1px solid #f00',
                                 borderRadius: 4,
                                 boxShadow:
                                     '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08);',
                                 boxSizing: 'content-box',
-
-                                // ...(isRotated
-                                //     ? flip(item.value || {})
-                                //     : item.value || {})
+                                opacity: item.opacity || '1'
                             },
                             '#storybook-preview-background > div': {
-                                '&::after': {
+                                '&::before': {
                                     content: `''`,
                                     position: 'absolute',
                                     bottom: '0',
                                     top: '0',
                                     left: '0',
                                     right: '0',
-                                    // background: 'green',
-                                    opacity: '0.5',
-                                    backgroundImage:
-                                        'url(https://picsum.photos/200/300)',
-                                    backgroundRepeat: 'no-repeat',
-                                    filter: 'invert(100%)'
-                                    // backgroundPositionX: '20px',
-                                    // backgroundPositionY: '20px'
+                                    ...backgroundPositionX,
+                                    ...backgroundPositionY,
+                                    ...backgroundImage,
+                                    ...filter,
+
+                                    backgroundRepeat: 'no-repeat'
                                 }
                             }
                         }}

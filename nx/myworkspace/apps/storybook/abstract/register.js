@@ -10,7 +10,7 @@ import Tool from './src/Tool';
 
 addons.register(ADDON_ID, api => {
   addons.add(ADDON_ID, {
-    title: 'viewport / media-queries',
+    title: 'My Company / Abstract',
     type: types.TOOL,
     match: ({ viewMode }) => viewMode === 'story',
     render: () => <Tool api={api} />,
