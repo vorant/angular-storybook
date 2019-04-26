@@ -72,7 +72,7 @@ export default class Tool extends Component {
             }
 
             if (storyParams && storyParams.share) {
-                const shareId = storyParams.share.split("/").slice(-1)[0];
+                const shareId = storyParams.share.split('/').slice(-1)[0];
                 style.backgroundImage = `url(/${shareId}.png)`;
             }
 
@@ -91,9 +91,8 @@ export default class Tool extends Component {
         if (!storyParams || !storyParams.share) {
             return style;
         }
-        console.log('action - ', action);
+
         if (action === 'Abstract') {
-            
             style.display = 'none';
         } else if (action === 'Compare') {
             style.opacity = '0.5';

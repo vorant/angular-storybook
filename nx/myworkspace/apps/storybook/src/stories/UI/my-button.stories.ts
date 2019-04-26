@@ -85,7 +85,8 @@ storiesOf('UI | MyButton', module)
         () => ({
             component: MyButtonComponent,
             props: {
-                text: text('text', 'Button')
+                text: text('text', 'Button'),
+                disabled: true
             }
         }),
         {
