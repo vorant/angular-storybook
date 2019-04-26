@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import deprecate from 'util-deprecate';
 
 import { Global } from '@storybook/theming';
 
@@ -97,7 +96,6 @@ export default class Tool extends Component {
         } else if (action === 'Compare') {
             style.opacity = '0.5';
         } else if (action === 'Invert') {
-            // style.filter = 'invert(100%)';
             style.opacity = '0.5';
         }
 
