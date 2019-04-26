@@ -23,10 +23,28 @@ storiesOf('UI | MyButton', module)
                 backgroundPositionX: 0,
                 backgroundPositionY: 0,
                 share:
-                    'https://share.goabstract.com/8bf534cf-5db0-4f4e-8655-a0be6faf1f34'
+                    'https://share.goabstract.com/5c87634d-7050-485b-87f7-430f3b241d9d'
             }
         }
     )
+    .add(
+        'Focused',
+        () => ({
+            component: MyButtonComponent,
+            props: {
+                text: text('text', 'Button')
+            }
+        }),
+        {
+            abstract: {
+                backgroundPositionX: 0,
+                backgroundPositionY: 0,
+                share:
+                    'https://share.goabstract.com/670876ae-f767-467a-8bd6-f2c119cb3068'
+            }
+        }
+    )
+
     .add(
         'Hover',
         () => ({
@@ -40,12 +58,12 @@ storiesOf('UI | MyButton', module)
                 backgroundPositionX: 0,
                 backgroundPositionY: 0,
                 share:
-                    'https://share.goabstract.com/8bf534cf-5db0-4f4e-8655-a0be6faf1f34'
+                    'https://share.goabstract.com/aebd1462-8b6f-4e71-b2ab-8d8f12f79ab2'
             }
         }
     )
     .add(
-        'Active',
+        'Pressed',
         () => ({
             template:
                 '<myworkspace-my-button [text]="text"></myworkspace-my-button>',
@@ -58,7 +76,7 @@ storiesOf('UI | MyButton', module)
                 backgroundPositionX: 0,
                 backgroundPositionY: 0,
                 share:
-                    'https://share.goabstract.com/670876ae-f767-467a-8bd6-f2c119cb3068'
+                    'https://share.goabstract.com/1eee96a8-bc70-47fa-8b1d-de47e6b23eb2'
             }
         }
     )
@@ -75,7 +93,7 @@ storiesOf('UI | MyButton', module)
                 backgroundPositionX: 0,
                 backgroundPositionY: 0,
                 share:
-                    'https://share.goabstract.com/670876ae-f767-467a-8bd6-f2c119cb3068'
+                    'https://share.goabstract.com/8e834258-5ecd-4118-807a-9c55a6a39f2b'
             }
         }
     );
