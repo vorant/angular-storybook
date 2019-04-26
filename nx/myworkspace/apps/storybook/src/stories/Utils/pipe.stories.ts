@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import { MyButtonComponent, InversePipe } from '@myworkspace/ui';
 
-storiesOf('Pipes', module)
+storiesOf('Utils|Pipes', module)
     .addDecorator(
         moduleMetadata({
             imports: [],
