@@ -71,11 +71,12 @@ export default class Tool extends Component {
                 }px`;
             }
 
-            if (storyParams && storyParams.imgName) {
-                style.backgroundImage = `url(/${storyParams.imgName})`;
+            if (storyParams && storyParams.share) {
+                const shareId = storyParams.share.split("/").slice(-1)[0];
+                style.backgroundImage = `url(/${shareId}.png)`;
             }
 
-            if (storyParams && storyParams.imgName && action === 'Invert') {
+            if (storyParams && storyParams.share && action === 'Invert') {
                 style.filter = 'invert(100%)';
             }
         }
@@ -87,11 +88,12 @@ export default class Tool extends Component {
         const { action, storyParams } = this.state;
         const style = {};
 
-        if (!storyParams || !storyParams.imgName) {
+        if (!storyParams || !storyParams.share) {
             return style;
         }
-
+        console.log('action - ', action);
         if (action === 'Abstract') {
+            
             style.display = 'none';
         } else if (action === 'Compare') {
             style.opacity = '0.5';
