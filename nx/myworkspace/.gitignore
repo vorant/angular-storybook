@@ -39,5 +39,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Storybook tests
+# Storybook
 jest-test-results.json
+abstract-parser.js
+storybook-temp
+.out

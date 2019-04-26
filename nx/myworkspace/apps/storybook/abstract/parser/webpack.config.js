@@ -5,10 +5,10 @@ module.exports = {
   entry: ['whatwg-fetch', __dirname + '/src/index.js'],
   devtool: 'cheap-module-eval-source-map',
   target: 'node' ,
-  output: {
-    path: __dirname,
-    filename: "bundle.js"
-  },
+  // output: {
+  //   path: __dirname,
+  //   filename: "abstract-parser.js"
+  // },
   module: {
     rules: [
       {

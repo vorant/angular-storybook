@@ -8,6 +8,23 @@ storiesOf('Abstract | MyAbstract ', module)
         declarations: [MyButtonComponent]
     })
 )
+.addParameters({ jest: ['my-button.component'] })
+.add(
+    'MyButtonComponent',
+    () => ({
+        component: MyButtonComponent,
+        props: {
+            text: 'Button'
+        }
+    }),
+    {
+        abstract: {
+            backgroundPositionX: 0,
+            backgroundPositionY: 0,
+            share: 'https://share.goabstract.com/8bf534cf-5db0-4f4e-8655-a0be6faf1f34'
+        }
+    }
+)
 .add(
     'Test abstract',
     () => ({

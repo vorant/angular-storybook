@@ -22,4 +22,8 @@ describe('MyButtonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Fail test', () => {
+    expect([1,2]).toEqual([3,1,2,3]);
+  });
 });

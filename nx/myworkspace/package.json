@@ -25,10 +25,13 @@
         "workspace-schematic": "./node_modules/.bin/nx workspace-schematic",
         "dep-graph": "./node_modules/.bin/nx dep-graph",
         "help": "./node_modules/.bin/nx help",
-        "storybook": "start-storybook -s ./apps/storybook/src/assets -c apps/storybook/.storybook",
-        "test:generate-output": "ng test ui --json --outputFile=apps/storybook/jest-test-results.json",
-        "abstract:build-parser": "webpack --config apps/storybook/abstract/parser/webpack.config.js",
-        "abstract:download-assets": "node apps/storybook/abstract/parser/bundle.js -s apps/storybook/src/stories -a apps/storybook/src/assets"
+        "storybook:generate-tests-output": "ng test ui --json --outputFile=storybook-temp/jest-test-results.json",
+        "storybook:generate-tests-output:watch": "npm run storybook:generate-tests-output -- --watch",
+        "storybook:dev": "start-storybook -s apps/storybook/src/assets -c apps/storybook/.storybook",
+        "storybook:deploy": "build-storybook -c apps/storybook/.storybook -s apps/storybook/src/assets -o .out",
+        "abstract:build-parser": "webpack --config apps/storybook/abstract/parser/webpack.config.js -o storybook-temp/abstract-parser.js",
+        "abstract:download-assets": "node storybook-temp/abstract-parser.js -s apps/storybook/src/stories -a apps/storybook/src/assets",
+        "storybook:full": ""
     },
     "private": true,
     "dependencies": {
