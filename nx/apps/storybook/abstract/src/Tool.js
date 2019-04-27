@@ -13,12 +13,19 @@ import {
 import { PARAM_KEY } from './constants';
 import { Abstract, Html, Compare, Invert } from './my-icon';
 
+const MyPage = () => (
+    <div>
+        <input type="range" min="0" max="200" step="10" value="60" />
+    </div>
+);
+
 export default class Tool extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             action: 'HTML',
+            opacity: 50,
             storyParams: {}
         };
 
@@ -53,6 +60,10 @@ export default class Tool extends Component {
         this.setState({ action });
     };
 
+    handleOpacity = opacity => {
+        this.setState({ opacity });
+    };
+
     getBackgroundStyle = () => {
         const { action, storyParams } = this.state;
         const style = {};
@@ -85,7 +96,7 @@ export default class Tool extends Component {
     };
 
     getIframeStyle = () => {
-        const { action, storyParams } = this.state;
+        const { action, storyParams, opacity } = this.state;
         const style = {};
 
         if (!storyParams || !storyParams.share) {
@@ -95,9 +106,9 @@ export default class Tool extends Component {
         if (action === 'Abstract') {
             style.display = 'none';
         } else if (action === 'Compare') {
-            style.opacity = '0.5';
+            style.opacity = opacity / 100;
         } else if (action === 'Invert') {
-            style.opacity = '0.5';
+            style.opacity = opacity / 100;
         }
 
         return style;
@@ -167,6 +178,15 @@ export default class Tool extends Component {
                 >
                     <Invert />
                 </IconButton>
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    defaultValue={this.state.opacity}
+                    onChange={event => this.handleOpacity(event.target.value)}
+                    step="5"
+                    style={{width: '100px'}}
+                />
                 <Separator />
             </Fragment>
         );

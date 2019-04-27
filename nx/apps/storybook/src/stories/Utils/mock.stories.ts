@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { InversePipe, TokenComponent } from '@myworkspace/ui';
 
-storiesOf('Metadata|Combined', module)
+storiesOf('Mock | Providers', module)
   .addDecorator(
     moduleMetadata({
       imports: [],
@@ -18,13 +18,13 @@ storiesOf('Metadata|Combined', module)
       ],
     })
   )
-  .add('Combined 1', () => ({
+  .add('For story', () => ({
     template: `<myworkspace-token [name]="name"></myworkspace-token>`,
     props: {
       name: 'Prop Name',
     },
   }))
-  .add('Combined 2', () => ({
+  .add('For story case', () => ({
     template: `<myworkspace-token [name]="name | inverse"></myworkspace-token>`,
     props: {
       name: 'Prop Name',
@@ -32,4 +32,27 @@ storiesOf('Metadata|Combined', module)
     moduleMetadata: {
       declarations: [InversePipe],
     },
-  }));
+  })).add('Individual', () => ({
+    // template: `<myworkspace-token [name]="name"></myworkspace-token>`,
+    component: [TokenComponent],
+    props: {
+      name: 'Individual ',
+    },
+    moduleMetadata: {
+      imports: [],
+      declarations: [TokenComponent],
+      providers: [
+        {
+          provide: 'ITEMS',
+          useValue: ['John Seena', 'Someone else'],
+        },
+        {
+          provide: 'DEFAULT_NAME',
+          useValue: 'Provider Name',
+        },
+      ],
+    },
+  }))
+
+
+
