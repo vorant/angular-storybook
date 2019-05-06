@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { linkTo } from '@storybook/addon-links';
 
-storiesOf('Addons | LinkTo', module)
+storiesOf('Examples | LinkTo', module)
     .add('Go to My Button', () => ({
         template:
             '<button (click)="linkTo()">Go to MyButton component</button>',

@@ -15,7 +15,7 @@ import {
     withKnobs
 } from '@storybook/addon-knobs';
 
-storiesOf('Addons | Knobs', module)
+storiesOf('Examples | Knobs', module)
     .addDecorator(withKnobs)
     .add('All cases', () => ({
         template: `<ul>

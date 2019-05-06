@@ -47,7 +47,7 @@ addDecorator(
     })
 );
 
-const req = require.context('../src/stories', true, /\.stories\.ts$/); // <- import all the stories at once
+const req = require.context('../../../', true, /\.stories\.ts$/); // <- import all the stories at once
 
 function loadStories() {
     req.keys().forEach(filename => req(filename));

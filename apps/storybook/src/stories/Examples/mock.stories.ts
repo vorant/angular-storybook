@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { InversePipe, TokenComponent } from '@myworkspace/ui';
 
-storiesOf('Mock | Providers', module)
+storiesOf('Examples | Mock / Providers', module)
   .addDecorator(
     moduleMetadata({
       imports: [],
@@ -34,7 +34,7 @@ storiesOf('Mock | Providers', module)
     },
   })).add('Individual', () => ({
     // template: `<myworkspace-token [name]="name"></myworkspace-token>`,
-    component: [TokenComponent],
+    component: TokenComponent,
     props: {
       name: 'Individual ',
     },

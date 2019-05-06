@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { Button } from '@storybook/angular/demo';
 
-storiesOf('Addons | Accessibility', module)
+storiesOf('Examples | Accessibility', module)
     .add('Accessible', () => ({
         template: `
             <button>
