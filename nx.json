@@ -17,7 +17,7 @@
     "ui": {
       "tags": []
     },
-    "mystorybook": {
+    "storybook": {
       "tags": []
     }
   }
