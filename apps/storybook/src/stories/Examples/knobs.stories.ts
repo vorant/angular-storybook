@@ -37,7 +37,7 @@ storiesOf('Examples | Knobs', module)
         props: {
             text: text('text', 'My text'),
             bool: boolean('boolean', false),
-            number: text('number', 8),
+            number: text('number', 8 as any),
             range: (() => {
                 const label = 'Range: Temperature';
                 const defaultValue = 73;
@@ -111,7 +111,7 @@ storiesOf('Examples | Knobs', module)
                 };
                 // radio, inline-radio, check, inline-check, select, multi-select
 
-                return options(label, valuesObj, defaultValue, optionsObj);
+                return options(label, valuesObj, defaultValue, optionsObj as any);
             })(),
             date: (() => {
                 const label = 'Event Date';
